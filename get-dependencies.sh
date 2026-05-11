@@ -10,7 +10,8 @@ pacman -Syu --noconfirm \
     jq \
     binutils \
     fakeroot \
-    git
+    git \
+    libxcrypt-compat
 
 get-debloated-pkgs --add-common --prefer-nano
 
@@ -21,5 +22,5 @@ npm install
 npm run build
 npm run package-deb
 
-mv dist/*.deb ..
+mv bin/linux/x64/*.deb ..
 cd ..
