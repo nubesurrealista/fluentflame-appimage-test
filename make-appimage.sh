@@ -3,22 +3,31 @@
 set -eu
 
 ARCH=$(uname -m)
-VERSION=$(pacman -Q PACKAGENAME | awk '{print $2; exit}') # example command to get version of application here
+VERSION=$(jq -r '.version' fluentflame-reader/package.json)
+
 export ARCH VERSION
 export OUTPATH=./dist
 export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
-export ICON=PATH_OR_URL_TO_ICON
-export DESKTOP=PATH_OR_URL_TO_DESKTOP_ENTRY
 
-# Deploy dependencies
-quick-sharun /PATH/TO/BINARY_AND_LIBRARIES_HERE
+mkdir -p ./AppDir/bin ./extract_deb
+cp *.deb ./extract_deb/
 
-# Additional changes can be done in between here
+cd ./extract_deb
+ar x *.deb
+tar xf data.tar.*
 
-# Turn AppDir into AppImage
+export ICON=$(pwd)/usr/share/icons/hicolor/512x512/apps/fluentflame-reader.png
+export DESKTOP=$(pwd)/usr/share/applications/fluentflame-reader.desktop
+
+mv opt/"Fluentflame Reader"/* ../AppDir/bin/
+
+cd ..
+rm -rf ./extract_deb
+
+quick-sharun ./AppDir/bin/fluentflame-reader
+
+echo 'DESKTOPINTEGRATION=0' >> ./AppDir/.env
+
 quick-sharun --make-appimage
-
-# Test the app for 12 seconds, if the test fails due to the app
-# having issues running in the CI use --simple-test instead
 quick-sharun --test ./dist/*.AppImage
