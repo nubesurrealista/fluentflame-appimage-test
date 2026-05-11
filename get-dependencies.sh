@@ -4,23 +4,22 @@ set -eu
 
 ARCH=$(uname -m)
 
-echo "Installing package dependencies..."
-echo "---------------------------------------------------------------"
-# pacman -Syu --noconfirm PACKAGESHERE
+pacman -Syu --noconfirm \
+    nodejs \
+    npm \
+    jq \
+    binutils \
+    fakeroot \
+    git
 
-echo "Installing debloated packages..."
-echo "---------------------------------------------------------------"
 get-debloated-pkgs --add-common --prefer-nano
 
-# Comment this out if you need an AUR package
-#make-aur-package PACKAGENAME
+git clone https://github.com/FluentFlame/fluentflame-reader.git
+cd fluentflame-reader
 
-# If the application needs to be manually built that has to be done down here
+npm install
+npm run build
+npm run package-deb
 
-# if you also have to make nightly releases check for DEVEL_RELEASE = 1
-#
-# if [ "${DEVEL_RELEASE-}" = 1 ]; then
-# 	nightly build steps
-# else
-# 	regular build steps
-# fi
+mv dist/*.deb ..
+cd ..
