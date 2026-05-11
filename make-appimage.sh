@@ -10,18 +10,8 @@ export OUTPATH=./dist
 export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
 
-mkdir -p ./AppDir/bin
-cp *.deb ./AppDir/
-
-cd ./AppDir
-ar x *.deb
-tar xf data.tar.*
-rm *.deb data.tar.* control.tar.* debian-binary
-
-mv opt/"Fluentflame Reader"/* ./bin/
-rm -rf opt
-
-cd ..
+export ICON=$(pwd)/AppDir/icon.png
+export DESKTOP=$(pwd)/AppDir/fluentflame-reader.desktop
 
 quick-sharun ./AppDir/bin/fluentflame-reader
 
