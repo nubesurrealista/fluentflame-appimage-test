@@ -34,8 +34,8 @@ cp usr/share/applications/fluentflame-reader.desktop ./
 cp usr/share/icons/hicolor/512x512/apps/fluentflame-reader.png ./icon.png
 cp ./icon.png ./.DirIcon
 
-sed -i 's/Exec=Fluentflame/Exec=fluentflame-reader/g' ./fluentflame-reader.desktop
-sed -i 's/Exec="Fluentflame"/Exec=fluentflame-reader/g' ./fluentflame-reader.desktop
+sed -i 's|^Exec=.*|Exec=fluentflame-reader %U|g' ./fluentflame-reader.desktop
+sed -i 's|^Icon=.*|Icon=icon|g' ./fluentflame-reader.desktop
 
 rm -rf opt usr *.deb data.tar.* control.tar.* debian-binary
 cd ..
