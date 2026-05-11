@@ -22,5 +22,17 @@ npm install
 npm run build
 npm run package-deb
 
-mv bin/linux/x64/*.deb ..
+mkdir -p ../AppDir/bin
+cp bin/linux/x64/*.deb ../AppDir/
+
+cd ../AppDir
+ar x *.deb
+tar xf data.tar.*
+
+mv opt/"Fluentflame Reader"/* ./bin/
+cp usr/share/applications/fluentflame-reader.desktop ./
+cp usr/share/icons/hicolor/512x512/apps/fluentflame-reader.png ./icon.png
+cp ./icon.png ./.DirIcon
+
+rm -rf opt usr *.deb data.tar.* control.tar.* debian-binary
 cd ..
