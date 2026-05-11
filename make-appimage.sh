@@ -13,7 +13,7 @@ export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}
 export ICON=$(pwd)/AppDir/icon.png
 export DESKTOP=$(pwd)/AppDir/fluentflame-reader.desktop
 
-quick-sharun ./AppDir/bin/fluentflame-reader
+quick-sharun ./AppDir/bin/*
 
 echo 'DESKTOPINTEGRATION=0' >> ./AppDir/.env
 
