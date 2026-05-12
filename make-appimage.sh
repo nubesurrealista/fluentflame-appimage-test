@@ -10,9 +10,6 @@ export OUTPATH=./dist
 export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
 
-export ICON=$(pwd)/AppDir/icon.png
-export DESKTOP=$(pwd)/AppDir/fluentflame-reader.desktop
-
 quick-sharun ./AppDir/bin/*
 
 echo 'DESKTOPINTEGRATION=0' >> ./AppDir/.env
